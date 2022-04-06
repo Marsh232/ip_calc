@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <windows.h>
+#include "ConsoleColor.h"
 
 
 using namespace std;
@@ -36,9 +37,11 @@ int main()
 	int mask;
 	int i = 0;
 	int zxc = 0;
+	int nworkn = workn[0];
 
 	int okt[4]{};
 
+	
 	cout << "Пример ввода ip адреса: 192.168.16.2/" << endl << endl;
 	
 	cout << "Введите ip адрес: ";
@@ -76,7 +79,7 @@ int main()
 		}
 	}
 
-	cout << "Ваш ip адрес: " + pipa << mask << "\t"; // вывод ip
+	cout << "Ваш ip адрес: "<< blue << pipa << mask << white << "\t\t"; // вывод ip
 	Schet(okt);
 
 	for (int i = 0; i < 32; i++) // вывод двоички ip
@@ -97,7 +100,7 @@ int main()
 	cout << endl << endl;
 
 	Mask(mask); // вывод маски
-	cout << "Маска: " << mask_10[0] << "." << mask_10[1] << "." << mask_10[2] << "." << mask_10[3] << " = " << mask << "\t";
+	cout << "Маска: " << blue << mask_10[0] << "." << mask_10[1] << "." << mask_10[2] << "." << mask_10[3] << " = " << mask << red << "\t\t";
 
 	for (int i = 0; i < 32; i++) // вывод двоички маски
 	{
@@ -114,10 +117,11 @@ int main()
 			cout << mask_2[i];
 		}
 	}
+	cout << white;
 	cout << endl << endl << endl;
 
 	Network(mask); // вывод сети
-	cout << "Network: " << workn[0] << "." << workn[1] << "." << workn[2] << "." << workn[3] << "/" << mask << "\t";
+	cout << "Network: " << blue << workn[0] << "." << workn[1] << "." << workn[2] << "." << workn[3] << "/" << mask << white << "\t\t";
 
 	for (int i = 0; i < 32; i++) // вывод двоички сети
 	{
@@ -134,30 +138,11 @@ int main()
 			cout << network[i];
 		}
 	}
-	if (0 < workn[0] < 128)
-	{
-		cout << "(Class A)";
-	}
-	else if (128 < workn[0] < 192)
-	{
-		cout << "(Class B)";
-	}
-	else if (192 < workn[0] < 224)
-	{
-		cout << "(Class C)";
-	}
-	else if (224 < workn[0] < 240)
-	{
-		cout << "(Class D)";
-	}
-	else if (240 < workn[0])
-	{
-		cout << "(Class E)";
-	}
+
 	cout << endl;
 
 	Broadcast(mask); // вывод броды
-	cout << "Broadcast: " << broad_10[0] << "." << broad_10[1] << "." << broad_10[2] << "." << broad_10[3] << "/" << mask << "\t";
+	cout << "Broadcast: " << blue << broad_10[0] << "." << broad_10[1] << "." << broad_10[2] << "." << broad_10[3] << "/" << mask << white << "\t\t";
 
 	for (int i = 0; i < 32; i++) // вывод двоички броды 
 	{
@@ -178,7 +163,7 @@ int main()
 
 	// вывод мин.Адрес
 	int worknn = workn[3] + 1;
-	cout << "HostMin: " << workn[0] << "." << workn[1] << "." << workn[2] << "." << worknn << "/" << mask << "\t";
+	cout << "HostMin: " << blue << workn[0] << "." << workn[1] << "." << workn[2] << "." << worknn << "/" << mask << white << "\t\t";
 
 	network[31] = 1;
 	for (int i = 0; i < 32; i++)
@@ -200,7 +185,7 @@ int main()
 
 	// вывод макс.Адрес
 	int broad = broad_10[3] - 1;
-	cout << "HostMax: " << broad_10[0] << "." << broad_10[1] << "." << broad_10[2] << "." << broad << "/" << mask << "\t";
+	cout << "HostMax: " << blue << broad_10[0] << "." << broad_10[1] << "." << broad_10[2] << "." << broad << "/" << mask << white << "\t\t";
 
 	broad_2[31] = 0;
 	for (int i = 0; i < 32; i++)
@@ -222,9 +207,7 @@ int main()
 
 	// вывод кол-ва хостов
 
-	cout << "Host/Net: ";
-	system("color c1");
-	cout << pow(2, (31 - mask)) << endl << endl;
+	cout << "Host/Net: " << blue << pow(2, (32 - mask)) - 2 << white << endl << endl;
 }
 
 void Schet(int okt[]) // функция для перевода "октета" в двоичку

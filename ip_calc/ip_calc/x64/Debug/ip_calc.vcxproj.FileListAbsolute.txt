@@ -1,1 +1,2 @@
 D:\my project C++\ip_calc\ip_calc\x64\Debug\ip_calc.exe
+C:\Users\admin\source\repos\ip_calc\ip_calc\x64\Debug\ip_calc.exe
