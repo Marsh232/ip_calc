@@ -2,7 +2,6 @@
 #include <string>
 #include <stdlib.h>
 #include <math.h>
-#include <windows.h>
 #include "ConsoleColor.h"
 
 
