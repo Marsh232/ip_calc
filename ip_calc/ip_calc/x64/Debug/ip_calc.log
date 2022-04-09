@@ -1,0 +1,6 @@
+﻿  ip_calc.cpp
+C:\Users\admin\source\repos\ip_calc\ip_calc\ip_calc.cpp(144,8): warning C4804: <=: небезопасное использование типа "bool" в операции
+C:\Users\admin\source\repos\ip_calc\ip_calc\ip_calc.cpp(148,15): warning C4804: <=: небезопасное использование типа "bool" в операции
+C:\Users\admin\source\repos\ip_calc\ip_calc\ip_calc.cpp(152,15): warning C4804: <=: небезопасное использование типа "bool" в операции
+C:\Users\admin\source\repos\ip_calc\ip_calc\ip_calc.cpp(156,15): warning C4804: <=: небезопасное использование типа "bool" в операции
+  ip_calc.vcxproj -> C:\Users\admin\source\repos\ip_calc\x64\Debug\ip_calc.exe
