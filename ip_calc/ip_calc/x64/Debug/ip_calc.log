@@ -1,0 +1,4 @@
+﻿  ip_calc.cpp
+D:\my project C++\ip_calc\ip_calc\ip_calc\ip_calc.cpp(411,15): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+D:\my project C++\ip_calc\ip_calc\ip_calc\ip_calc.cpp(412,8): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+  ip_calc.vcxproj -> D:\my project C++\ip_calc\ip_calc\x64\Debug\ip_calc.exe
