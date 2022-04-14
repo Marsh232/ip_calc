@@ -40,10 +40,23 @@ int subbroad_2[32]{};
 int num_subnet = 0;
 
 
+void Nom_ip(int mask, int nom_ip_10); // функция считает ip по номеру
+int nom_ip_10_2[4]{};
+int bin_2[32]{};
+
+
+void Nom_ip_net(int mask); // функция вывод вместе со всей инфой номер ip-шника 
+int ip_net = 0;
+
+
+void Up_net(int mask);
+
+
 int main()
 {
 	setlocale(LC_ALL, "rus");
 
+	char nom_ip;
 	char vopros;
 	string pipa;
 	string oktet[4];
@@ -53,6 +66,7 @@ int main()
 	int i = 0;
 	int zxc = 0;
 	int nworkn = workn[0];
+	int nom_ip_10;
 
 	int okt[4]{};
 
@@ -99,7 +113,7 @@ int main()
 		}
 	}
 
-	cout << "Ваш ip адрес: "<< blue << pipa << mask << white << "\t\t"; // вывод ip
+	cout << "Ваш ip адрес: "<< blue << okt[0] << "." << okt[1] << "." << okt[2] << "." << okt[3] <<"/" << mask << white << "\t\t"; // вывод ip
 	Schet(okt);
 
 	for (int i = 0; i < 32; i++) // вывод двоички ip
@@ -228,7 +242,10 @@ int main()
 
 	// вывод кол-ва хостов
 
-	cout << "Host/Net: " << blue << pow(2, (32 - mask)) - 2 << white << endl << endl;
+	cout << "Host/Net: " << blue << pow(2, (32 - mask)) - 2 << white << endl;
+
+	Nom_ip_net(mask);
+	cout << "№ в сети: " << blue << ip_net << white << endl << endl;
 
 	cout << "Считать подсети? y/n: ";
 	cin >> vopros;
@@ -272,7 +289,45 @@ int main()
 
 		Subnet(mask, submask);
 	}
-	else if (vopros == 'n') { return 0; }
+	else if (vopros == 'n') 
+	{ 
+		cout << endl;
+	}
+
+	cout << "Хотите найти ip адрес по номеру? y/n: ";
+	cin >> nom_ip;
+
+	if (nom_ip == 'y')
+	{
+		cout << "Введите номер: ";
+		cin >> nom_ip_10;
+
+		cout << endl;
+		Nom_ip(mask, nom_ip_10);
+		cout << "IP адресс под № " << nom_ip_10 << ": " << blue << nom_ip_10_2[0] << "." << nom_ip_10_2[1] << "." << nom_ip_10_2[2] << "." << nom_ip_10_2[3] << "/" << mask << white << "\t\t";
+
+		for (int i = 0; i < 32; i++)
+		{
+			if (i == mask)
+			{
+				cout << " ";
+			}
+			if (i == 8 || i == 16 || i == 24)
+			{
+				cout << "." << network[i];
+			}
+			else
+			{
+				cout << network[i];
+			}
+		}
+		cout << endl << endl;
+		system("pause");
+	}
+	else if (nom_ip == 'n')
+	{
+		cout << endl;
+	}
 }
 
 void Schet(int okt[]) // функция для перевода "октета" в двоичку
@@ -607,4 +662,64 @@ void Subnet(int mask, int submask)
 	cout << green << "Subets: " << blue << num_subnet << endl << white;
 	cout << "Hosts: " << blue << all_num_host << endl << endl << endl << white;
 	system("pause");
+	cout << endl << endl;
+}
+
+void Nom_ip(int mask, int nom_ip_10)
+{
+	int net_2 = 0;
+	int n_2 = 0;
+	int q = mask;
+	int abuba = pow(2, (31-mask));
+	for (int i = 31; i >= mask; i--)
+	{
+		if (nom_ip_10 >= abuba)
+		{
+			nom_ip_10 -= abuba;
+			bin_2[i] = 1;
+		}
+		else if (nom_ip_10 <= abuba)
+		{
+			bin_2[i] = 0;
+		}
+		abuba /= 2;
+	}
+	for (int i = 31; i >= mask; i--)
+	{
+		network[i] = bin_2[q];
+		q++;
+	}
+	for (; net_2 < 4; net_2++)
+	{
+		int abuba = 128;
+		for (int i = 0; i < 8; i++)
+		{
+			if (network[n_2] == 1)
+			{
+				nom_ip_10_2[net_2] += abuba;
+			}
+			abuba /= 2;
+			n_2++;
+			continue;
+		}
+	}
+}
+
+void Nom_ip_net(int mask)
+{
+	int akaka = pow(2, (31 - mask));
+
+	for (int i = mask; i < 32; i++)
+	{
+		if (bin[i] == 1)
+		{
+			ip_net += akaka;
+		}
+		akaka /= 2;
+	}
+}
+
+void Up_net(int mask)
+{
+
 }
