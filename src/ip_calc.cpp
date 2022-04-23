@@ -691,7 +691,7 @@ void Subnet(int mask, int submask)
 
 	}
 	cout << endl << endl;
-	cout << green << "Subets: " << blue << num_subnet << endl << white;
+	cout << green << "Subnts: " << blue << num_subnet << endl << white;
 	cout << "Hosts: " << blue << all_num_host << endl << endl << endl << white;
 	system("pause");
 	cout << endl << endl;
