@@ -56,256 +56,151 @@ int main()
 {
 	setlocale(LC_ALL, "rus");
 
-	char nom_ip;
-	char vopros;
-	string pipa;
-	string oktet[4];
+	START:
+		char nom_ip;
+		char vopros;
+		string pipa;
+		string oktet[4];
 
-	int submask;
-	int mask;
-	int i = 0;
-	int zxc = 0;
-	int nworkn = workn[0];
-	int nom_ip_10;
+		int submask;
+		int mask;
+		int i = 0;
+		int zxc = 0;
+		int nworkn = workn[0];
+		int nom_ip_10;
 
-	int okt[4]{};
+		int okt[4]{};
 
 	
-	cout << "\t\t\t//////////////////////////////////" << endl;
-	cout << "\t\t\t//	IP Calculator v1.0	//" << endl;
-	cout << "\t\t\t//	   by Trunov	        //" << endl;
-	cout << "\t\t\t//////////////////////////////////" << endl << endl << endl;
+		cout << "\t\t\t//////////////////////////////////" << endl;
+		cout << "\t\t\t//	IP Calculator v1.1	//" << endl;
+		cout << "\t\t\t//	   by Trunov	        //" << endl;
+		cout << "\t\t\t//////////////////////////////////" << endl << endl << endl;
 
-	cout << "Пример ввода ip адреса: 192.168.16.2/" << endl << endl;
+		cout << "Пример ввода ip адреса: 192.168.16.2/" << endl << endl;
 	
-	cout << "Введите ip адрес: ";
-	getline(cin, pipa);
+		cout << "Введите ip адрес: ";
+		//getline(cin, pipa);
+		cin >> pipa;
 
-	cout << "Введите маску: ";
-	cin >> mask;
-	cout << endl;
-
-	if (mask > 32)
-	{
-		cout << "Вы ввели некорректную маску";
-		return 0;
+		cout << "Введите маску: ";
+		cin >> mask;
 		cout << endl;
-	}
 
-	for (auto c : pipa)
-	{
-		if (c == '.' || c == '/')
+		if (mask > 32)
 		{
-			try
+			cout << "Вы ввели некорректную маску";
+			return 0;
+			cout << endl;
+		}
+
+		for (auto c : pipa)
+		{
+			if (c == '.' || c == '/')
 			{
-				okt[i] = stoi(oktet[i]); // если нашло точку или слеш преобразует ячейку стринг массива в инт и передает в ячейку инт массива 
+				try
+				{
+					okt[i] = stoi(oktet[i]); // если нашло точку или слеш преобразует ячейку стринг массива в инт и передает в ячейку инт массива 
+				}
+				catch (invalid_argument e)
+				{
+					cout << "Caught Invalid Argument Exception\n"; // если для преобразования получили invalid прикол, то выводится иди нахуй
+				}
+				i++; // если нашло точку или слеш произойдет перемешение заполняемых ячеек массивов
+				continue;
 			}
-			catch (invalid_argument e)
+			else if (c >= '0' && c <= '9')
 			{
-				cout << "Caught Invalid Argument Exception\n"; // если для преобразования получили invalid прикол, то выводится иди нахуй
+				oktet[i] += c; // если нашло цифру передает в ячейку стринг массива
 			}
-			i++; // если нашло точку или слеш произойдет перемешение заполняемых ячеек массивов
-			continue;
 		}
-		else if (c >= '0' && c <= '9')
-		{
-			oktet[i] += c; // если нашло цифру передает в ячейку стринг массива
-		}
-	}
 
-	cout << "Ваш ip адрес: "<< blue << okt[0] << "." << okt[1] << "." << okt[2] << "." << okt[3] <<"/" << mask << white << "\t\t"; // вывод ip
-	Schet(okt);
+		cout << "Ваш ip адрес: "<< blue << okt[0] << "." << okt[1] << "." << okt[2] << "." << okt[3] <<"/" << mask << white << "\t\t"; // вывод ip
+		Schet(okt);
 
-	for (int i = 0; i < 32; i++) // вывод двоички ip
-	{
-		if (i == mask)
+		for (int i = 0; i < 32; i++) // вывод двоички ip
 		{
-			cout << " ";
-		}
-		if (i == 8 || i == 16 || i == 24)
-		{
-			cout << "." << bin[i];
-		}
-		else
-		{
-			cout << bin[i];
-		}
-	}
-	cout << endl << endl;
-
-	Mask(mask); // вывод маски
-	cout << "Маска: " << blue << mask_10[0] << "." << mask_10[1] << "." << mask_10[2] << "." << mask_10[3] << " = " << mask << red << "\t\t";
-
-	for (int i = 0; i < 32; i++) // вывод двоички маски
-	{
-		if (i == mask)
-		{
-			cout << " ";
-		}
-		if (i == 8 || i == 16 || i == 24)
-		{
-			cout << "." << mask_2[i];
-		}
-		else
-		{
-			cout << mask_2[i];
-		}
-	}
-	cout << white;
-	cout << endl << endl << endl;
-
-	Network(mask); // вывод сети
-	cout << "Network: " << blue << workn[0] << "." << workn[1] << "." << workn[2] << "." << workn[3] << "/" << mask << white << "\t\t";
-
-	for (int i = 0; i < 32; i++) // вывод двоички сети
-	{
-		if (i == mask)
-		{
-			cout << " ";
-		}
-		if (i == 8 || i == 16 || i == 24)
-		{
-			cout << "." << network[i];
-		}
-		else
-		{
-			cout << network[i];
-		}
-	}
-	cout << endl;
-
-	Broadcast(mask); // вывод броды
-	cout << "Broadcast: " << blue << broad_10[0] << "." << broad_10[1] << "." << broad_10[2] << "." << broad_10[3] << white << "\t\t";
-
-	for (int i = 0; i < 32; i++) // вывод двоички броды 
-	{
-		if (i == mask)
-		{
-			cout << " ";
-		}
-		if (i == 8 || i == 16 || i == 24)
-		{
-			cout << "." << broad_2[i];
-		}
-		else
-		{
-			cout << broad_2[i];
-		}
-	}
-	cout << endl;
-
-	// вывод мин.Адрес
-	int worknn = workn[3] + 1;
-	cout << "HostMin: " << blue << workn[0] << "." << workn[1] << "." << workn[2] << "." << worknn << white << "\t\t\t";
-
-	network[31] = 1;
-	for (int i = 0; i < 32; i++)
-	{
-		if (i == mask)
-		{
-			cout << " ";
-		}
-		if (i == 8 || i == 16 || i == 24)
-		{
-			cout << "." << network[i];
-		}
-		else
-		{
-			cout << network[i];
-		}
-	}
-	cout << endl;
-	network[31] = 0;
-
-	// вывод макс.Адрес
-	int broad = broad_10[3] - 1;
-	cout << "HostMax: " << blue << broad_10[0] << "." << broad_10[1] << "." << broad_10[2] << "." << broad << white << "\t\t\t";
-
-	broad_2[31] = 0;
-	for (int i = 0; i < 32; i++)
-	{
-		if (i == mask)
-		{
-			cout << " ";
-		}
-		if (i == 8 || i == 16 || i == 24)
-		{
-			cout << "." << broad_2[i];
-		}
-		else
-		{
-			cout << broad_2[i];
-		}
-	}
-	cout << endl;
-	broad_2[31] = 1;
-
-	// вывод кол-ва хостов
-
-	cout << "Host/Net: " << blue << pow(2, (32 - mask)) - 2 << white << endl;
-
-	Nom_ip_net(mask);
-	cout << "№ в сети: " << blue << ip_net << white << endl << endl;
-
-	cout << "Считать подсети? y/n: ";
-	cin >> vopros;
-
-	if (vopros == 'y')
-	{
-		cout << "Введите маску:";
-		cin >> submask;
-		cout << endl << endl << endl;
-
-		cout << green << "Подсети" << white << endl << endl;
-
-		Submask(submask); // вывод маски
-		cout << "Маска: " << blue << submask_10[0] << "." << submask_10[1] << "." << submask_10[2] << "." << submask_10[3] << " = " << submask << red << "\t\t";
-
-		for (int i = 0; i < 32; i++) // вывод двоички маски
-		{
-			if (mask <= i && i < submask)
-			{
-				cout << red;
-			}
-			else
-			{
-				cout << white;
-			}
-			if (i == submask)
+			if (i == mask)
 			{
 				cout << " ";
 			}
 			if (i == 8 || i == 16 || i == 24)
 			{
-				cout << "." << submask_2[i];
+				cout << "." << bin[i];
 			}
 			else
 			{
-				cout << submask_2[i];
+				cout << bin[i];
 			}
 		}
-		
-		cout << endl << endl ;
+		cout << endl << endl;
 
-		Subnet(mask, submask);
-	}
-	else if (vopros == 'n') 
-	{ 
+		Mask(mask); // вывод маски
+		cout << "Маска: " << blue << mask_10[0] << "." << mask_10[1] << "." << mask_10[2] << "." << mask_10[3] << " = " << mask << red << "\t\t";
+
+		for (int i = 0; i < 32; i++) // вывод двоички маски
+		{
+			if (i == mask)
+			{
+				cout << " ";
+			}
+			if (i == 8 || i == 16 || i == 24)
+			{
+				cout << "." << mask_2[i];
+			}
+			else
+			{
+				cout << mask_2[i];
+			}
+		}
+		cout << white;
+		cout << endl << endl << endl;
+
+		Network(mask); // вывод сети
+		cout << "Network: " << blue << workn[0] << "." << workn[1] << "." << workn[2] << "." << workn[3] << "/" << mask << white << "\t\t";
+
+		for (int i = 0; i < 32; i++) // вывод двоички сети
+		{
+			if (i == mask)
+			{
+				cout << " ";
+			}
+			if (i == 8 || i == 16 || i == 24)
+			{
+				cout << "." << network[i];
+			}
+			else
+			{
+				cout << network[i];
+			}
+		}
 		cout << endl;
-	}
 
-	cout << "Хотите найти ip адрес по номеру? y/n: ";
-	cin >> nom_ip;
+		Broadcast(mask); // вывод броды
+		cout << "Broadcast: " << blue << broad_10[0] << "." << broad_10[1] << "." << broad_10[2] << "." << broad_10[3] << white << "\t\t";
 
-	if (nom_ip == 'y')
-	{
-		cout << "Введите номер: ";
-		cin >> nom_ip_10;
-
+		for (int i = 0; i < 32; i++) // вывод двоички броды 
+		{
+			if (i == mask)
+			{
+				cout << " ";
+			}
+			if (i == 8 || i == 16 || i == 24)
+			{
+				cout << "." << broad_2[i];
+			}
+			else
+			{
+				cout << broad_2[i];
+			}
+		}
 		cout << endl;
-		Nom_ip(mask, nom_ip_10);
-		cout << "IP адресс под № " << nom_ip_10 << ": " << blue << nom_ip_10_2[0] << "." << nom_ip_10_2[1] << "." << nom_ip_10_2[2] << "." << nom_ip_10_2[3] << "/" << mask << white << "\t\t";
 
+		// вывод мин.Адрес
+		int worknn = workn[3] + 1;
+		cout << "HostMin: " << blue << workn[0] << "." << workn[1] << "." << workn[2] << "." << worknn << white << "\t\t\t";
+
+		network[31] = 1;
 		for (int i = 0; i < 32; i++)
 		{
 			if (i == mask)
@@ -321,13 +216,150 @@ int main()
 				cout << network[i];
 			}
 		}
-		cout << endl << endl;
-		system("pause");
-	}
-	else if (nom_ip == 'n')
-	{
 		cout << endl;
-	}
+		network[31] = 0;
+
+		// вывод макс.Адрес
+		int broad = broad_10[3] - 1;
+		cout << "HostMax: " << blue << broad_10[0] << "." << broad_10[1] << "." << broad_10[2] << "." << broad << white << "\t\t\t";
+
+		broad_2[31] = 0;
+		for (int i = 0; i < 32; i++)
+		{
+			if (i == mask)
+			{
+				cout << " ";
+			}
+			if (i == 8 || i == 16 || i == 24)
+			{
+				cout << "." << broad_2[i];
+			}
+			else
+			{
+				cout << broad_2[i];
+			}
+		}
+		cout << endl;
+		broad_2[31] = 1;
+
+		// вывод кол-ва хостов
+
+		cout << "Host/Net: " << blue << pow(2, (32 - mask)) - 2 << white << endl;
+
+		Nom_ip_net(mask);
+		cout << "№ в сети: " << blue << ip_net << white << endl << endl;
+
+		cout << "Считать подсети? y/n: ";
+		cin >> vopros;
+
+		if (vopros == 'y')
+		{
+			cout << "Введите маску:";
+			cin >> submask;
+			cout << endl << endl << endl;
+
+			cout << green << "Подсети" << white << endl << endl;
+
+			Submask(submask); // вывод маски
+			cout << "Маска: " << blue << submask_10[0] << "." << submask_10[1] << "." << submask_10[2] << "." << submask_10[3] << " = " << submask << red << "\t\t";
+
+			for (int i = 0; i < 32; i++) // вывод двоички маски
+			{
+				if (mask <= i && i < submask)
+				{
+					cout << red;
+				}
+				else
+				{
+					cout << white;
+				}
+				if (i == submask)
+				{
+					cout << " ";
+				}
+				if (i == 8 || i == 16 || i == 24)
+				{
+					cout << "." << submask_2[i];
+				}
+				else
+				{
+					cout << submask_2[i];
+				}
+			}
+		
+			cout << endl << endl ;
+
+			Subnet(mask, submask);
+		}
+		else if (vopros == 'n') 
+		{ 
+			cout << endl;
+		}
+
+		cout << "Хотите найти ip адрес по номеру? y/n: ";
+		cin >> nom_ip;
+
+		if (nom_ip == 'y')
+		{
+			cout << "Введите номер: ";
+			cin >> nom_ip_10;
+
+			cout << endl;
+			Nom_ip(mask, nom_ip_10);
+			cout << "IP адресс под № " << nom_ip_10 << ": " << blue << nom_ip_10_2[0] << "." << nom_ip_10_2[1] << "." << nom_ip_10_2[2] << "." << nom_ip_10_2[3] << "/" << mask << white << "\t\t";
+
+			for (int i = 0; i < 32; i++)
+			{
+				if (i == mask)
+				{
+					cout << " ";
+				}
+				if (i == 8 || i == 16 || i == 24)
+				{
+					cout << "." << network[i];
+				}
+				else
+				{
+					cout << network[i];
+				}
+			}
+			cout << endl << endl;
+			system("pause");
+		}
+		else if (nom_ip == 'n')
+		{
+			cout << endl;
+		}
+		cout << endl;
+		mask = 0;
+		nom_ip_10 = 0;
+		ip_net = 0;
+		num_subnet = 0;
+		for (int i = 0; i < 4; i++)
+		{
+			nom_ip_10_2[i] = 0;
+			subnet_10[i] = 0;
+			subbroad_10[i] = 0;
+			submask_10[i] = 0;
+			broad_10[i] = 0;
+			workn[i] = 0;
+			mask_10[i] = 0;
+			okt[i] = 0;
+			oktet[i] = " ";
+		}
+		for (int i = 0; i < 32; i++)
+		{
+			bin_2[i] = 0;
+			subnet_2[i] = 0;
+			subbroad_2[i] = 0;
+			submask_2[i] = 0;
+			mask_2[i] = 0;
+			bin[i] = 0;
+			broad_2[i] = 0;
+			mask_2[i] = 0;
+			network[i] = 0;
+		}
+	goto START;
 }
 
 void Schet(int okt[]) // функция для перевода "октета" в двоичку
