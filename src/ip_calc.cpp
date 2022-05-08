@@ -60,7 +60,7 @@ int main()
 		char nom_ip;
 		char vopros;
 		string pipa;
-		string oktet[4];
+		string oktet[5];
 
 		int submask;
 		int mask;
@@ -73,38 +73,42 @@ int main()
 
 	
 		cout << "\t\t\t//////////////////////////////////" << endl;
-		cout << "\t\t\t//	IP Calculator v1.1	//" << endl;
+		cout << "\t\t\t//	IP Calculator v1.2	//" << endl;
 		cout << "\t\t\t//	   by Trunov	        //" << endl;
 		cout << "\t\t\t//////////////////////////////////" << endl << endl << endl;
 
-		cout << "Пример ввода ip адреса: 192.168.16.2/" << endl << endl;
+		cout << "Пример ввода ip адреса: 192.168.16.2/24" << endl << endl;
 	
 		cout << "Введите ip адрес: ";
-		//getline(cin, pipa);
 		cin >> pipa;
 
-		cout << "Введите маску: ";
-		cin >> mask;
-		cout << endl;
-
-		if (mask > 32)
-		{
-			cout << "Вы ввели некорректную маску";
-			return 0;
-			cout << endl;
-		}
+		pipa += '/';
 
 		for (auto c : pipa)
 		{
 			if (c == '.' || c == '/')
 			{
-				try
+				if (i < 4)
 				{
-					okt[i] = stoi(oktet[i]); // если нашло точку или слеш преобразует ячейку стринг массива в инт и передает в ячейку инт массива 
+					try
+					{
+						okt[i] = stoi(oktet[i]); // если нашло точку или слеш преобразует ячейку стринг массива в инт и передает в ячейку инт массива 
+					}
+					catch (invalid_argument e)
+					{
+						cout << "Caught Invalid Argument Exception\n"; // если для преобразования получили invalid прикол, то выводится иди нахуй
+					}
 				}
-				catch (invalid_argument e)
+				else if (i == 4)
 				{
-					cout << "Caught Invalid Argument Exception\n"; // если для преобразования получили invalid прикол, то выводится иди нахуй
+					try
+					{
+						mask = stoi(oktet[i]); 
+					}
+					catch (invalid_argument e)
+					{
+						cout << "Caught Invalid Argument Exception\n"; 
+					}
 				}
 				i++; // если нашло точку или слеш произойдет перемешение заполняемых ячеек массивов
 				continue;
@@ -113,6 +117,12 @@ int main()
 			{
 				oktet[i] += c; // если нашло цифру передает в ячейку стринг массива
 			}
+		}
+		if (mask > 32)
+		{
+			cout << "Вы ввели некорректную маску";
+			return 0;
+			cout << endl;
 		}
 
 		cout << "Ваш ip адрес: "<< blue << okt[0] << "." << okt[1] << "." << okt[2] << "." << okt[3] <<"/" << mask << white << "\t\t"; // вывод ip
